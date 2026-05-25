@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creator Private Domain OS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #f5f7fb;
+      color: #111;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .small-btn {
+      border-radius: 999px;
+      transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: #111;
+      color: #fff;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #111;
+      border: 1px solid #e5e7eb;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    .small-btn {
+      background: #f5f7fb;
+      color: #111;
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+
+    button:hover,
+    .tag:hover,
+    .fan-card:hover {
+      transform: scale(1.04);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: 40px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: #6b7280;
+      line-height: 1.45;
+    }
+
+    .zone {
+      padding: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #edf0f5;
+      border-radius: 32px;
+      padding: 24px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+    }
+
+    .health-card {
+      min-width: 220px;
+      padding: 16px 20px;
+    }
+
+    .health-card strong {
+      display: block;
+      font-size: 28px;
+      margin-top: 6px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    .left,
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .metric p:first-child {
+      font-size: 14px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 32px;
+      margin: 8px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .chart-area {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .y-axis {
+      height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: #9ca3af;
+      font-size: 12px;
+      padding-bottom: 28px;
+    }
+
+    .bar-chart {
+      height: 240px;
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      border-left: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0 0 8px 12px;
+      background-image: linear-gradient(to bottom, #f3f4f6 1px, transparent 1px);
+      background-size: 100% 25%;
+    }
+
+    .bar-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bar {
+      width: 100%;
+      border-radius: 16px 16px 4px 4px;
+      background: linear-gradient(to top, #111, #d1d5db);
+      min-height: 12px;
+    }
+
+    .bar-value {
+      font-size: 12px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .bar-label {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .chart-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .chart-summary div {
+      background: #f7f8fc;
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .chart-summary strong,
+    .chart-summary span {
+      display: block;
+    }
+
+    .chart-summary span {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 8px;
+    }
+
+    .tag {
+      background: #f5f7fb;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .tag.big { font-size: 28px; }
+    .tag.medium { font-size: 22px; }
+    .tag.small { font-size: 16px; }
+
+    .soft-card {
+      background: #f7f8fc;
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .soft-card + .soft-card {
+      margin-top: 16px;
+    }
+
+    .soft-card .label {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .soft-card .main-text {
+      color: #111;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .week-grid,
+    .fan-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .fan-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .week-card {
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .week-card strong {
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .fan-card {
+      transition: 0.2s ease;
+    }
+
+    .circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .pink { background: #fbcfe8; }
+    .blue { background: #bfdbfe; }
+    .green { background: #bbf7d0; }
+
+    .group-btn {
+      width: 100%;
+      background: #f7f8fc;
+      border-radius: 22px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .orange-dot { background: #fb923c; }
+    .green-dot { background: #4ade80; }
+    .blue-dot { background: #60a5fa; }
+
+    .product-visual {
+      height: 160px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #fce7f3, #fed7aa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .product-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+
+    .product-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .notify-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .qa-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #15803d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .grid-4,
+      .grid-2,
+      .layout,
+      .week-grid,
+      .fan-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <nav class="nav">
+      <button class="btn-primary">▥ Analytics Dashboard</button>
+      <button class="btn-secondary">◎ Fan Experience</button>
+      <button class="btn-secondary">✦ AI Suggestions</button>
+      <button class="btn-secondary">◒ Monetization Tools</button>
+    </nav>
+
+    <section class="zone zone-header header">
+      <div>
+        <h1>Creator Private Domain OS</h1>
+        <p>Relationship-first private community management</p>
+      </div>
+
+      <div class="card health-card">
+        <p>Today’s Community Health</p>
+        <strong>82% Active</strong>
+      </div>
+    </section>
+
+    <section class="zone zone-metrics grid-4">
+      <div class="card metric">
+        <p>Group Messages</p>
+        <strong>1,284</strong>
+        <p>+18% this week</p>
+      </div>
+      <div class="card metric">
+        <p>Fan Retention</p>
+        <strong>74%</strong>
+        <p>+9% this month</p>
+      </div>
+      <div class="card metric">
+        <p>Most Active Topic</p>
+        <strong>Dating stories</strong>
+        <p>High emotional response</p>
+      </div>
+      <div class="card metric">
+        <p>Conversion Rate</p>
+        <strong>12%</strong>
+        <p>From fan group drops</p>
+      </div>
+    </section>
+
+    <section class="zone zone-revenue">
+      <div class="card" style="box-shadow:none;">
+        <div class="section-head">
+          <div>
+            <h2>Revenue + ROI Tracking</h2>
+          <p>Performance across brand deals and private monetization</p>
+        </div>
+        <button class="small-btn">View Report</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:20px; align-items:stretch;">
+        <div class="soft-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; gap:12px; flex-wrap:wrap;">
+            <div>
+              <p class="label">Current Month Revenue</p>
+              <p class="main-text" style="font-size:42px;">¥48,200</p>
+            </div>
+
+            <div style="text-align:right;">
+              <p class="label">ROI Growth</p>
+              <p class="main-text" style="color:#16a34a; font-size:32px;">+32%</p>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+            <div style="background:white; border-radius:18px; padding:18px;">
+              <p class="label">Brand Deals</p>
+              <strong style="font-size:24px;">¥21,000</strong>
+            </div>
+
+            <div style="background:white; border-radius:18px; padding:18px;">
+              <p class="label">Private Sales</p>
+              <strong style="font-size:24px;">¥18,400</strong>
+            </div>
+
+            <div style="background:white; border-radius:18px; padding:18px;">
+              <p class="label">Affiliate Links</p>
+              <strong style="font-size:24px;">¥8,800</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="soft-card">
+          <div style="display:flex; justify-content:space-between; margin-bottom:18px; gap:12px; align-items:flex-start;">
+            <div>
+              <p class="label">Recent Ad Campaign</p>
+              <h3 style="margin:0;">Sleepwear Collection Launch</h3>
+            </div>
+
+            <button class="small-btn">Open Breakdown</button>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:20px;">
+            <div style="background:white; border-radius:18px; padding:16px; text-align:center;">
+              <p class="label">Ad Spend</p>
+              <strong style="font-size:24px;">¥3,000</strong>
+            </div>
+
+            <div style="background:white; border-radius:18px; padding:16px; text-align:center;">
+              <p class="label">Revenue</p>
+              <strong style="font-size:24px;">¥11,200</strong>
+            </div>
+
+            <div style="background:white; border-radius:18px; padding:16px; text-align:center;">
+              <p class="label">Orders</p>
+              <strong style="font-size:24px;">164</strong>
+            </div>
+
+            <div style="background:white; border-radius:18px; padding:16px; text-align:center;">
+              <p class="label">ROI</p>
+              <strong style="font-size:24px; color:#16a34a;">3.7x</strong>
+            </div>
+          </div>
+
+          <div style="height:10px; background:#e5e7eb; border-radius:999px; overflow:hidden;">
+            <div style="width:78%; height:100%; background:linear-gradient(to right,#111,#4ade80);"></div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:12px; color:#6b7280;">
+            <span>Campaign Performance</span>
+            <span>78% above average</span>
+          </div>
+      </div>
+    </section>
+
+    <section class="zone zone-insights grid-2">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Engagement Growth</h2>
+            <p>Community activity in the last 7 days</p>
+          </div>
+          <button class="small-btn">View Details →</button>
+        </div>
+
+        <div class="chart-area">
+          <div class="y-axis">
+            <span>300</span>
+            <span>200</span>
+            <span>100</span>
+            <span>0</span>
+          </div>
+
+          <div class="bar-chart">
+            <div class="bar-item">
+              <span class="bar-value">109</span>
+              <div class="bar" style="height:36%"></div>
+              <span class="bar-label">Mon</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-value">125</span>
+              <div class="bar" style="height:42%"></div>
+              <span class="bar-label">Tue</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-value">132</span>
+              <div class="bar" style="height:44%"></div>
+              <span class="bar-label">Wed</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-value">174</span>
+              <div class="bar" style="height:58%"></div>
+              <span class="bar-label">Thu</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-value">218</span>
+              <div class="bar" style="height:73%"></div>
+              <span class="bar-label">Fri</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-value">241</span>
+              <div class="bar" style="height:80%"></div>
+              <span class="bar-label">Sat</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-value">285</span>
+              <div class="bar" style="height:95%"></div>
+              <span class="bar-label">Sun</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-summary">
+          <div><strong>1,284</strong><span>Total messages</span></div>
+          <div><strong>+18%</strong><span>Weekly growth</span></div>
+          <div><strong>Sun</strong><span>Most active day</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Fan Emotion Map</h2>
+            <p>Most discussed emotional themes</p>
+          </div>
+          <button class="small-btn">Open Insights →</button>
+        </div>
+
+        <div class="tag-wrap">
+          <span class="tag big">Loneliness</span>
+          <span class="tag small">Dating</span>
+          <span class="tag medium">Friendship</span>
+          <span class="tag small">Shopping</span>
+          <span class="tag medium">Self Growth</span>
+          <span class="tag small">Late Night Talks</span>
+          <span class="tag small">Lifestyle</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone zone-tools layout">
+      <div class="left">
+        <div class="card">
+          <div class="section-head">
+            <h2>AI Engagement Suggestions</h2>
+            <button class="btn-primary">✦ Live Insights</button>
+          </div>
+
+          <div class="soft-card">
+            <p class="label">Today’s Suggested Prompt</p>
+            <p class="main-text">What is the most regrettable thing you bought this month?</p>
+          </div>
+
+          <div class="soft-card">
+            <p class="label">Fan Emotion Summary</p>
+            <p class="main-text">Fans are responding more positively to personal stories and behind the scenes content.</p>
+          </div>
+
+          <div class="soft-card">
+            <p class="label">Recommended Action</p>
+            <p class="main-text">Your Late Night Chat group has been inactive for 3 days. Start a poll or small giveaway to reactivate discussion.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <h2>30 Day Community Activation</h2>
+            <button class="small-btn">Generate Plan</button>
+          </div>
+
+          <div class="week-grid">
+            <div class="soft-card week-card"><p>Week 1</p><strong>Welcome + identity building</strong></div>
+            <div class="soft-card week-card"><p>Week 2</p><strong>Daily prompts + reactions</strong></div>
+            <div class="soft-card week-card"><p>Week 3</p><strong>Exclusive content drops</strong></div>
+            <div class="soft-card week-card"><p>Week 4</p><strong>Mini monetization event</strong></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <h2>Fan Side Experience</h2>
+            <button class="small-btn">Preview Fan Flow</button>
+          </div>
+
+          <div class="fan-grid">
+            <div class="soft-card fan-card">
+              <div class="circle pink">ID</div>
+              <h3>Identity Badge</h3>
+              <p>Fans unlock different community identities through participation.</p>
+            </div>
+            <div class="soft-card fan-card">
+              <div class="circle blue">EX</div>
+              <h3>Exclusive Access</h3>
+              <p>Private drops, early access, and behind the scenes content.</p>
+            </div>
+            <div class="soft-card fan-card">
+              <div class="circle green">GO</div>
+              <h3>Community Participation</h3>
+              <p>Polls, challenges, and direct interaction with creators.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="card">
+          <h2 style="margin-bottom:20px;">Community Status</h2>
+          <button class="group-btn">
+            <span><strong>Late Night Chat</strong><br><small>Low Activity</small></span>
+            <span class="dot orange-dot"></span>
+          </button>
+          <button class="group-btn">
+            <span><strong>Girls Group</strong><br><small>Healthy Engagement</small></span>
+            <span class="dot green-dot"></span>
+          </button>
+          <button class="group-btn">
+            <span><strong>VIP Fans</strong><br><small>High Conversion</small></span>
+            <span class="dot blue-dot"></span>
+          </button>
+        </div>
+
+        <div class="card">
+          <h2 style="margin-bottom:20px;">Monetization Drop</h2>
+          <div class="soft-card">
+            <div class="product-visual">
+              <div class="product-icon">◒</div>
+            </div>
+            <p>Exclusive Product</p>
+            <h3>Limited Sleepwear Collection</h3>
+            <div class="product-row">
+              <div>
+                <p>Early Access</p>
+                <strong>Fans Only</strong>
+              </div>
+              <button class="btn-primary">◒ Launch Drop</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="notify-head">
+            <h2>Smart Notifications</h2>
+            <button class="small-btn">●</button>
+          </div>
+          <div class="soft-card">12 fans mentioned feeling disconnected this week</div>
+          <div class="soft-card">Engagement increased after personal story posts</div>
+          <div class="soft-card">VIP group conversion increased by 8%</div>
+        </div>
+
+        </aside>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UCircle Creator OS Revenue First</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, Arial, sans-serif; background: #f5f7fb; color: #111; padding: 24px; }
+    .container { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+    button { border: none; cursor: pointer; font-family: inherit; }
+    .nav { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-primary,.btn-secondary,.small-btn { border-radius: 999px; transition: 0.2s ease; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary { background: #111; color: #fff; padding: 12px 20px; font-size: 14px; }
+    .btn-secondary { background: #fff; color: #111; border: 1px solid #e5e7eb; padding: 12px 20px; font-size: 14px; }
+    .small-btn { background: #f5f7fb; color: #111; padding: 10px 16px; font-size: 14px; }
+    button:hover,.tag:hover,.fan-card:hover { transform: scale(1.04); }
+    .header { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; }
+    h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 8px; }
+    h2 { font-size: 24px; margin-bottom: 4px; }
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    p { color: #6b7280; line-height: 1.45; }
+    .zone { padding: 0; border: none; background: transparent; box-shadow: none; }
+    .card { background: #fff; border: 1px solid #edf0f5; border-radius: 32px; padding: 24px; box-shadow: 0 6px 24px rgba(0,0,0,0.04); }
+    .health-card { min-width: 220px; padding: 16px 20px; }
+    .health-card strong { display: block; font-size: 28px; margin-top: 6px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .layout { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+    .left,.right { display: flex; flex-direction: column; gap: 24px; }
+    .metric p:first-child { font-size: 14px; }
+    .metric strong { display: block; font-size: 32px; margin: 8px 0; }
+    .section-head { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; }
+    .soft-card { background: #f7f8fc; border-radius: 22px; padding: 20px; }
+    .soft-card + .soft-card { margin-top: 16px; }
+    .label { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .main-text { color: #111; font-size: 18px; font-weight: 600; }
+    .revenue-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: stretch; }
+    .revenue-chart { height: 260px; background: white; border-radius: 24px; padding: 24px; display: flex; align-items: flex-end; gap: 18px; border: 1px solid #edf0f5; }
+    .revenue-bar-item { flex: 1; text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; }
+    .revenue-bar { border-radius: 16px 16px 6px 6px; width: 100%; }
+    .revenue-bar-item p { margin-top: 10px; font-size: 12px; color: #6b7280; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 20px; }
+    .summary-grid div { background: white; border-radius: 18px; padding: 18px; }
+    .summary-grid strong { font-size: 24px; }
+    .side-stack { display: flex; flex-direction: column; gap: 16px; }
+    .side-stack .soft-card { margin-top: 0; }
+    .chart-area { display: grid; grid-template-columns: 40px 1fr; gap: 12px; margin-top: 20px; }
+    .y-axis { height: 240px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; color: #9ca3af; font-size: 12px; padding-bottom: 28px; }
+    .bar-chart { height: 240px; display: flex; align-items: flex-end; gap: 14px; border-left: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; padding: 0 0 8px 12px; background-image: linear-gradient(to bottom,#f3f4f6 1px,transparent 1px); background-size: 100% 25%; }
+    .bar-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .bar { width: 100%; border-radius: 16px 16px 4px 4px; background: linear-gradient(to top,#111,#d1d5db); min-height: 12px; }
+    .bar-value { font-size: 12px; font-weight: 700; color: #111; }
+    .bar-label { font-size: 12px; color: #9ca3af; }
+    .chart-summary { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 20px; }
+    .chart-summary div { background: #f7f8fc; border-radius: 18px; padding: 14px; }
+    .chart-summary span { display: block; color: #6b7280; font-size: 12px; margin-top: 4px; }
+    .tag-wrap { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 8px; }
+    .tag { background: #f5f7fb; border-radius: 999px; padding: 12px 16px; font-weight: 600; transition: 0.2s ease; }
+    .tag.big { font-size: 28px; } .tag.medium { font-size: 22px; } .tag.small { font-size: 16px; }
+    .week-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+    .week-card { min-height: 140px; display: flex; flex-direction: column; justify-content: space-between; }
+    .week-card strong { font-size: 18px; line-height: 1.35; }
+    .group-btn { width: 100%; background: #f7f8fc; border-radius: 22px; padding: 16px; display: flex; align-items: center; justify-content: space-between; text-align: left; margin-bottom: 12px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .orange-dot { background: #fb923c; } .green-dot { background: #4ade80; } .blue-dot { background: #60a5fa; }
+    .notify-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+    .product-layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; align-items: stretch; }
+    .product-list { display: flex; flex-direction: column; gap: 16px; }
+    .product-card { background: #f7f8fc; border-radius: 24px; padding: 18px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; }
+    .product-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    .product-name { font-size: 20px; font-weight: 800; color: #111; }
+    .match-pill { border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 700; background: #111; color: #fff; }
+    .risk-pill { border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 700; background: #fff; color: #111; border: 1px solid #e5e7eb; }
+    .product-meta { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 14px; }
+    .product-meta div { background: #fff; border-radius: 16px; padding: 12px; }
+    .product-meta strong { display: block; font-size: 18px; color: #111; }
+    .decision-actions { display: flex; flex-direction: column; gap: 10px; min-width: 120px; }
+    .trust-panel { background: #111; color: #fff; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; min-height: 100%; }
+    .trust-panel p { color: #d1d5db; }
+    .trust-score { font-size: 56px; font-weight: 900; letter-spacing: -0.04em; margin: 14px 0 6px; }
+    .trust-chart { display: flex; align-items: flex-end; gap: 12px; height: 170px; margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.22); }
+    .trust-bar { flex: 1; border-radius: 14px 14px 4px 4px; background: linear-gradient(to top,#fff,#9ca3af); min-height: 14px; position: relative; }
+    .trust-labels { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; font-size: 12px; color: #d1d5db; text-align: center; }
+    .feedback-breakdown { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-top: 18px; }
+    .feedback-breakdown div { background: rgba(255,255,255,0.08); border-radius: 18px; padding: 14px; }
+    .feedback-breakdown strong { display: block; color: #fff; font-size: 20px; }
+    .warning-card { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 22px; padding: 18px; margin-top: 16px; }
+    .warning-card p { color: #9a3412; }
+    @media (max-width:900px) { .grid-4,.grid-2,.layout,.week-grid,.revenue-layout,.summary-grid,.product-layout,.product-meta,.feedback-breakdown { grid-template-columns: 1fr; } h1 { font-size: 32px; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <nav class="nav">
+      <button class="btn-primary">▥ Revenue Dashboard</button>
+      <button class="btn-secondary">◎ Community Health</button>
+      <button class="btn-secondary">✦ AI Suggestions</button>
+      <button class="btn-secondary">◈ Product Picks</button>
+      <button class="btn-secondary">◒ Fan Retention</button>
+    </nav>
+
+    <section class="zone header">
+      <div>
+        <h1>Creator Private Domain OS</h1>
+        <p>Relationship-first private community management</p>
+      </div>
+      <div class="card health-card">
+        <p>Today’s Community Health</p>
+        <strong>82% Active</strong>
+      </div>
+    </section>
+
+    <section class="zone zone-revenue">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Revenue + ROI Tracking</h2>
+            <p>Track revenue growth, ROI, and best-performing monetization channels.</p>
+          </div>
+          <button class="small-btn">Monthly Report</button>
+        </div>
+
+        <div class="revenue-layout">
+          <div class="soft-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;gap:16px;flex-wrap:wrap;">
+              <div>
+                <p class="label">Current Month Revenue</p>
+                <p class="main-text" style="font-size:48px;">¥48,200</p>
+              </div>
+              <div style="text-align:right;">
+                <p class="label">ROI Growth</p>
+                <p class="main-text" style="font-size:32px;color:#16a34a;">+32%</p>
+              </div>
+            </div>
+            <div class="revenue-chart">
+              <div class="revenue-bar-item"><div class="revenue-bar" style="height:32%;background:#d4d4d8;"></div><p>Jan</p></div>
+              <div class="revenue-bar-item"><div class="revenue-bar" style="height:46%;background:#a1a1aa;"></div><p>Feb</p></div>
+              <div class="revenue-bar-item"><div class="revenue-bar" style="height:58%;background:#71717a;"></div><p>Mar</p></div>
+              <div class="revenue-bar-item"><div class="revenue-bar" style="height:72%;background:#52525b;"></div><p>Apr</p></div>
+              <div class="revenue-bar-item"><div class="revenue-bar" style="height:90%;background:#111;"></div><p>May</p></div>
+            </div>
+            <div class="summary-grid">
+              <div><p class="label">Monthly Growth</p><strong>+18%</strong></div>
+              <div><p class="label">Highest Revenue</p><strong>May</strong></div>
+              <div><p class="label">Best ROI</p><strong>3.7x</strong></div>
+            </div>
+          </div>
+          <div class="side-stack">
+            <div class="soft-card"><p class="label">Brand Deals</p><h3 style="font-size:32px;">¥21,000</h3><p>43% of total revenue</p></div>
+            <div class="soft-card"><p class="label">Private Sales</p><h3 style="font-size:32px;">¥18,400</h3><p>Highest growth category</p></div>
+            <div class="soft-card"><p class="label">Affiliate Revenue</p><h3 style="font-size:32px;">¥8,800</h3><p>+18% this month</p></div>
+            <div class="soft-card"><p class="label">Best Performing Campaign</p><h3>Sleepwear Collection Launch</h3><p>3.7x ROI • 164 orders</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone zone-product-picks">
+      <div class="card">
+        <div class="section-head">
+          <div>
+            <h2>Product Picks + Fit Analysis</h2>
+            <p>Recommended products from potential brand partners. UCircle gives evidence-based suggestions, but the creator makes the final call.</p>
+          </div>
+          <button class="small-btn">Review New Offers</button>
+        </div>
+
+        <div class="product-layout">
+          <div class="product-list">
+            <div class="product-card">
+              <div>
+                <div class="product-top">
+                  <span class="product-name">Silk Sleepwear Set</span>
+                  <span class="match-pill">Highly Recommended</span>
+                  <span class="risk-pill">Low Risk</span>
+                </div>
+                <p>Strong fit with recent fan conversations around self-care, sleep quality, and romantic lifestyle content. Best for a soft launch in VIP Fans first.</p>
+                <div class="product-meta">
+                  <div><p class="label">Fan Match</p><strong>91%</strong></div>
+                  <div><p class="label">Expected Like</p><strong>High</strong></div>
+                  <div><p class="label">Trust Level</p><strong>88%</strong></div>
+                </div>
+              </div>
+              <div class="decision-actions">
+                <button class="btn-primary">Select</button>
+                <button class="small-btn">Hold</button>
+                <button class="small-btn">Reject</button>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div>
+                <div class="product-top">
+                  <span class="product-name">Portable Coffee Cup</span>
+                  <span class="match-pill">Test First</span>
+                  <span class="risk-pill">Medium Risk</span>
+                </div>
+                <p>Good lifestyle fit, but past comments show fans are sensitive to price and usefulness. Suggested action: run a poll before accepting the campaign.</p>
+                <div class="product-meta">
+                  <div><p class="label">Fan Match</p><strong>76%</strong></div>
+                  <div><p class="label">Expected Like</p><strong>Medium</strong></div>
+                  <div><p class="label">Trust Level</p><strong>72%</strong></div>
+                </div>
+              </div>
+              <div class="decision-actions">
+                <button class="btn-primary">Select</button>
+                <button class="small-btn">Poll Fans</button>
+                <button class="small-btn">Reject</button>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <div>
+                <div class="product-top">
+                  <span class="product-name">Fast Diet Tea</span>
+                  <span class="match-pill">Not Recommended</span>
+                  <span class="risk-pill">High Risk</span>
+                </div>
+                <p>High negative-comment risk because fans have previously pushed back on exaggerated health claims. Suggested fix: avoid the product or only consider it with verified ingredients and softer messaging.</p>
+                <div class="product-meta">
+                  <div><p class="label">Fan Match</p><strong>42%</strong></div>
+                  <div><p class="label">Expected Like</p><strong>Low</strong></div>
+                  <div><p class="label">Trust Level</p><strong>38%</strong></div>
+                </div>
+              </div>
+              <div class="decision-actions">
+                <button class="btn-primary">Reject</button>
+                <button class="small-btn">Need Proof</button>
+                <button class="small-btn">Edit Brief</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="trust-panel">
+            <div>
+              <p>Product Trust Analysis</p>
+              <div class="trust-score">84%</div>
+              <p>Confidence is mainly built from post-purchase feedback, return comments, fan sentiment, and early negative-comment prediction.</p>
+              <div class="trust-chart">
+                <div class="trust-bar" style="height:82%;"></div>
+                <div class="trust-bar" style="height:68%;"></div>
+                <div class="trust-bar" style="height:54%;"></div>
+                <div class="trust-bar" style="height:76%;"></div>
+              </div>
+              <div class="trust-labels"><span>Sales Feedback</span><span>Fan Sentiment</span><span>Risk Scan</span><span>Brand Fit</span></div>
+            </div>
+            <div>
+              <div class="feedback-breakdown">
+                <div><strong>312</strong><p>post-purchase comments analyzed</p></div>
+                <div><strong>24</strong><p>possible negative comments detected early</p></div>
+                <div><strong>18%</strong><p>risk lowered after copy adjustment</p></div>
+                <div><strong>Creator</strong><p>keeps final decision control</p></div>
+              </div>
+              <div class="warning-card">
+                <p><strong>Pre-launch warning:</strong> fans may question price and ingredient transparency. Recommended recovery plan: explain selection criteria, offer a Q&A post, and prepare refund or replacement options before launch.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone grid-4">
+      <div class="card metric"><p>Group Messages</p><strong>1,284</strong><p>+18% this week</p></div>
+      <div class="card metric"><p>Fan Retention</p><strong>74%</strong><p>+9% this month</p></div>
+      <div class="card metric"><p>Most Active Topic</p><strong>Dating stories</strong><p>High emotional response</p></div>
+      <div class="card metric"><p>Conversion Rate</p><strong>12%</strong><p>From fan group drops</p></div>
+    </section>
+
+    <section class="zone grid-2">
+      <div class="card">
+        <div class="section-head"><div><h2>Engagement Growth</h2><p>Community activity in the last 7 days</p></div><button class="small-btn">View Details →</button></div>
+        <div class="chart-area">
+          <div class="y-axis"><span>300</span><span>200</span><span>100</span><span>0</span></div>
+          <div class="bar-chart">
+            <div class="bar-item"><span class="bar-value">109</span><div class="bar" style="height:36%"></div><span class="bar-label">Mon</span></div>
+            <div class="bar-item"><span class="bar-value">125</span><div class="bar" style="height:42%"></div><span class="bar-label">Tue</span></div>
+            <div class="bar-item"><span class="bar-value">132</span><div class="bar" style="height:44%"></div><span class="bar-label">Wed</span></div>
+            <div class="bar-item"><span class="bar-value">174</span><div class="bar" style="height:58%"></div><span class="bar-label">Thu</span></div>
+            <div class="bar-item"><span class="bar-value">218</span><div class="bar" style="height:73%"></div><span class="bar-label">Fri</span></div>
+            <div class="bar-item"><span class="bar-value">241</span><div class="bar" style="height:80%"></div><span class="bar-label">Sat</span></div>
+            <div class="bar-item"><span class="bar-value">285</span><div class="bar" style="height:95%"></div><span class="bar-label">Sun</span></div>
+          </div>
+        </div>
+        <div class="chart-summary"><div><strong>1,284</strong><span>Total messages</span></div><div><strong>+18%</strong><span>Weekly growth</span></div><div><strong>Sun</strong><span>Most active day</span></div></div>
+      </div>
+      <div class="card">
+        <div class="section-head"><div><h2>Fan Emotion Map</h2><p>Most discussed emotional themes</p></div><button class="small-btn">Open Insights →</button></div>
+        <div class="tag-wrap"><span class="tag big">Loneliness</span><span class="tag small">Dating</span><span class="tag medium">Friendship</span><span class="tag small">Shopping</span><span class="tag medium">Self Growth</span><span class="tag small">Late Night Talks</span><span class="tag small">Lifestyle</span></div>
+      </div>
+    </section>
+
+    <section class="zone layout">
+      <div class="left">
+        <div class="card">
+          <div class="section-head"><h2>AI Engagement Suggestions</h2><button class="btn-primary">✦ Live Insights</button></div>
+          <div class="soft-card"><p class="label">Today’s Suggested Prompt</p><p class="main-text">What is the most regrettable thing you bought this month?</p></div>
+          <div class="soft-card"><p class="label">Fan Emotion Summary</p><p class="main-text">Fans are responding more positively to personal stories and behind the scenes content.</p></div>
+          <div class="soft-card"><p class="label">Recommended Action</p><p class="main-text">Your Late Night Chat group has been inactive for 3 days. Start a poll or small giveaway to reactivate discussion.</p></div>
+        </div>
+        <div class="card">
+          <div class="section-head"><h2>30 Day Community Activation</h2><button class="small-btn">Generate Plan</button></div>
+          <div class="week-grid">
+            <div class="soft-card week-card"><p>Week 1</p><strong>Welcome + identity building</strong></div>
+            <div class="soft-card week-card"><p>Week 2</p><strong>Daily prompts + reactions</strong></div>
+            <div class="soft-card week-card"><p>Week 3</p><strong>Exclusive content drops</strong></div>
+            <div class="soft-card week-card"><p>Week 4</p><strong>Mini monetization event</strong></div>
+          </div>
+        </div>
+      </div>
+      <aside class="right">
+        <div class="card">
+          <h2 style="margin-bottom:20px;">Community Status</h2>
+          <button class="group-btn"><span><strong>Late Night Chat</strong><br><small>Low Activity</small></span><span class="dot orange-dot"></span></button>
+          <button class="group-btn"><span><strong>Girls Group</strong><br><small>Healthy Engagement</small></span><span class="dot green-dot"></span></button>
+          <button class="group-btn"><span><strong>VIP Fans</strong><br><small>High Conversion</small></span><span class="dot blue-dot"></span></button>
+        </div>
+        <div class="card">
+          <div class="notify-head"><h2>Smart Notifications</h2><button class="small-btn">●</button></div>
+          <div class="soft-card">12 fans mentioned feeling disconnected this week</div>
+          <div class="soft-card">Engagement increased after personal story posts</div>
+          <div class="soft-card">VIP group conversion increased by 8%</div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
